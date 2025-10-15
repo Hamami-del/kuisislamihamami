@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kuis Islami • By Hamami</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1: #e6f3ff;   /* gradasi biru langit */
+    --bg2: #dff2ff;
+    --primary: #1976d2; /* biru tajam */
+    --accent: #0288d1;
+    --success: #2e7d32;
+    --danger: #c62828;
+    --card: #ffffff;
+    --glass: rgba(255,255,255,0.6);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background: linear-gradient(180deg,var(--bg1),var(--bg2));
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+
+  .app {
+    width:95%;
+    max-width:700px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), var(--card));
+    border-radius:18px;
+    box-shadow: 0 10px 30px rgba(16,78,122,0.12);
+    padding:20px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  header {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:6px;
+  }
+  .logo {
+    width:56px;
+    height:56px;
+    border-radius:12px;
+    background: linear-gradient(135deg,var(--primary),var(--accent));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:700;
+    font-size:20px;
+    box-shadow: 0 6px 18px rgba(3,57,108,0.12), inset 0 -6px 12px rgba(255,255,255,0.08);
+  }
+  h1{font-size:18px;margin:0;color:var(--primary)}
+  p.lead{margin:0;font-size:13px;color:#1769aa8a}
+
+  .meta {
+    display:flex;
+    gap:8px;
+    margin-top:12px;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .controls{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+
+  select, input[type="text"]{
+    padding:8px 10px;
+    border-radius:10px;
+    border:1px solid rgba(3,57,108,0.08);
+    font-size:14px;
+    outline:none;
+    min-width:120px;
+    background:var(--glass);
+  }
+  button {
+    background:var(--primary);
+    color:white;
+    border:none;
+    padding:9px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    box-shadow: 0 8px 16px rgba(3,57,108,0.08);
+  }
+  button.secondary{
+    background:transparent;
+    color:var(--primary);
+    border:1px solid rgba(3,57,108,0.08);
+    box-shadow:none;
+  }
+
+  .card {
+    margin-top:16px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.85));
+    padding:18px;
+    border-radius:12px;
+    border:1px solid rgba(3,57,108,0.04);
+    min-height:150px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+
+  .question{
+    font-size:18px;
+    color:#044f9a;
+    font-weight:600;
+    margin-bottom:12px;
+    text-align:center;
+  }
+
+  .answerRow{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+  }
+
+  .result {
+    margin-top:12px;
+    font-weight:700;
+    min-height:26px;
+    transition:all .25s ease;
+  }
+
+  /* Animations untuk benar / salah */
+  .flash-success {
+    animation: flashSuccess .9s ease both;
+  }
+  .flash-wrong {
+    animation: flashWrong .9s ease both;
+  }
+  @keyframes flashSuccess {
+    0%{ transform: translateY(0); box-shadow: none; }
+    20%{ transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 40px rgba(46,125,50,0.08);}
+    100%{ transform: translateY(0); box-shadow:none;}
+  }
+  @keyframes flashWrong {
+    0%{ transform: rotate(0deg) }
+    20%{ transform: rotate(-2deg) }
+    40%{ transform: rotate(2deg) }
+    60%{ transform: rotate(-1deg) }
+    100%{ transform: rotate(0deg) }
+  }
+
+  .scorebar{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:14px;
+  }
+  .small{font-size:12px;color:#1769aa8a}
+
+  /* Modal simple for PAY */
+  .modal {
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background: rgba(3,57,108,0.35);
+    z-index:40;
+  }
+  .modal.show{display:flex}
+  .modalCard{
+    width:95%;
+    max-width:420px;
+    background:white;
+    border-radius:12px;
+    padding:16px;
+    box-shadow:0 30px 70px rgba(3,57,108,0.18);
+  }
+  .payOptions {display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .payRow{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:8px;border-radius:8px;border:1px dashed rgba(3,57,108,0.06)}
+  .note{font-size:13px;color:#1769aa}
+
+  footer{
+    margin-top:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .byline{font-size:12px;color:#1769aa8a}
+
+  /* responsive */
+  @media (max-width:520px){
+    .answerRow{flex-direction:column}
+    select{width:100%}
+  }
+
+  /* confetti circles (simple) */
+  .confetti {
+    position:absolute;
+    pointer-events:none;
+    inset:0;
+  }
+  .confetti span{
+    position:absolute;
+    width:10px;height:10px;
+    border-radius:50%;
+    opacity:0.95;
+    animation: fall 1.6s linear forwards;
+  }
+  @keyframes fall{
+    to { transform: translateY(140px) rotate(200deg); opacity:0; }
+  }
+
+</style>
+</head>
+<body>
+  <div class="app" id="app">
+    <header>
+      <div class="logo">H</div>
+      <div>
+        <h1>Kuis Islami • Hamami</h1>
+        <p class="lead">Belajar sambil bermain — versi profesional </p>
+      </div>
+    </header>
+
+    <div class="meta">
+      <div class="controls">
+        <select id="level">
+          <option value="easy">Mudah</option>
+          <option value="medium" selected>Sedang</option>
+          <option value="hard">Sulit</option>
+        </select>
+
+        <input id="playerName" type="text" placeholder="Nama pemain (opsional)" style="min-width:200px" />
+        <button id="startBtn">Mulai</button>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="small">Skor: <span id="scoreView">0</span></div>
+        <button id="payBtn" class="secondary">Bayar Seiklasnya</button>
+      </div>
+    </div>
+
+    <div class="card" id="card">
+      <div class="question" id="question">Klik "Mulai" untuk memulai kuis.</div>
+
+      <div class="answerRow" id="answerRow" style="display:none">
+        <input id="answer" type="text" placeholder="Tulis jawabanmu..." />
+        <button id="submitBtn">Jawab</button>
+      </div>
+
+      <div class="result" id="result"></div>
+
+      <div class="scorebar" id="scorebar" style="display:none">
+        <div class="small" id="progressText"></div>
+        <div class="small" id="tips">Tip: kamu bisa jawab meski ada sedikit salah ketik.</div>
+      </div>
+
+      <div class="confetti" id="confetti"></div>
+    </div>
+
+    <footer>
+      <div class="byline">Versi Premium • Siap dijual</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button id="resetBtn" class="secondary">Reset</button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal Pembayaran -->
+  <div class="modal" id="payModal" aria-hidden="true">
+    <div class="modalCard">
+      <h3>Bayar Seikhlasnya • Dukung karya Hamami</h3>
+      <p class="note">Jika kamu suka game ini, boleh bayar seikhlasnya agar Hamami bisa terus membuat konten edukasi Islami.</p>
+
+      <div class="payOptions">
+        <!-- ----- ATURAN PENJUALAN / LINK PEMBAYARAN -----
+             Ganti teks/link di bawah dengan cara pembayaran milikmu,
+             contoh: link Gumroad, link Dana/OVO/GoPay, PayPal, dsb.
+        -->
+        <div class="payRow">
+          <div>Via Gumroad (contoh)</div>
+          <div><a href="https://www.facebook.com/profile.php?id=61563464585507" id="gumroadLink" target="_blank">FB</a></div>
+        </div>
+        <div class="payRow">
+          <div>Via Dana/OVO/GoPay</div>
+          <div><span id="eWallet">0855-4526-0449</span></div>
+        </div>
+        <div class="payRow">
+          <div>Atau bayar seikhlasnya</div>
+          <div><button id="paidBtn">Saya Sudah Bayar</button></div>
+        </div>
+      </div>
+
+      <p style="margin-top:10px;font-size:13px;color:#1769aa8a">Setelah membayar, klik "Saya Sudah Bayar" untuk menandai sebagai didukung.</p>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+        <button id="closePay" class="secondary">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background music & effects -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2024/07/09/audio_ed9df3f032.mp3?filename=islamic-music-no-copyright-copyright-free-islamic-background-music-223062.mp3&g-recaptcha-response=0cAFcWeA4LNY45dB0Gy7kKyNmu4Ka-y_LdUazgkMiACNeKqt5wqPkYe0OeDDwGFoKr8VB5203nTGQtEexTQHXgN_cs7c8YzjjkhrdKMD2CvrV4B44Z3k55eMwnuUfTmogSw6TMVnz6XFj_AglXiOpr_R3UhwBW0xyLgA3oMg6HV6JhE-Zn4AmP9q2i1bN8N7bGDaM2GSvEMNJHIzoMtqT4l_iYZ3vdeBKoZEUnpHuns1Oxtzvc6kJ5fpB6stWfExWwT8uhpYXmWpnxQMrd7dZqfkSe6Qa38RSyDk3GtUCyyB4P7GtKxY272ai50SF524nV99OU3krdT1pjHU5BHQkjs-gUzyGp1C5321hDsOgNYlfGVcwOC5rMXTJSZJL4CyDERhk4wMC7_mdXVvmctVgpNLFxnLQ3p0lWxFYxN-qJ2eNT8zrnvkVOimGeBMnqFPkHWDhEzKplluo84OVdkR1LJCcCSql_tHsAxfGFFOQ_McZOSms4cuOlYKKoYlH10EwRGneeMq9yhxldymTXz1CMOFDF4LsSTWeGveQA06klM8LGcuGEgpCY_kLmU5fngoy-l3KQVY7MwDOHfsfYh7e1UuxzrxCM9JNcMtgvA_CNKlYtcRY13a8LtwcWVscIEKv_h8RYObvv2mV840qZKmg7eC7iiP_cc2hZgANDQd1URRnVIBL7s7UOSNp26YGz9TvfjrA3PcKO75dko1NeEJxWaZnbKL-J_WDy88NSKLStoyJxP86CtUrmekzY8ce40OE1LcDlyEK_1NYBzLW59ePoTk16zn67ZKGm5g&remote_template=1" type="audio/mp3">
+  </audio>
+  <audio id="sndCorrect" preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2024/02/26/audio_cfc55c2a33.mp3?filename=shine-193240.mp3" type="audio/mp3">
+  </audio>
+  <audio id="sndWrong" preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2024/03/31/audio_90a0db4b4c.mp3?filename=error-04-199275.mp3" type="audio/mp3">
+  </audio>
+
+<script>
+/* =========================
+   Data soal per tingkat
+   ========================= */
+const data = {
+  easy: [
+    {q: "Kitab suci umat Islam adalah?", a: "Al-Qur'an"},
+    {q: "Bulan puasa dalam Islam disebut?", a: "Ramadhan"},
+    {q: "Rukun Islam ada berapa?", a: "5"},
+    {q: "Arah kiblat umat Islam menghadap ke?", a: "Ka'bah"},
+    {q: "Puasa Ramadhan hukumnya?", a: "Wajib"}
+  ],
+  medium: [
+    {q: "Siapakah Nabi terakhir dalam Islam?", a: "Muhammad"},
+    {q: "Nama malaikat penyampai wahyu?", a: "Jibril"},
+    {q: "Khalifah pertama setelah Nabi wafat?", a: "Abu Bakar"},
+    {q: "Hari raya setelah Ramadhan disebut?", a: "Idul Fitri"},
+    {q: "Jumlah rakaat shalat wajib sehari semalam?", a: "17"}
+  ],
+  hard: [
+    {q: "Nama lengkap Nabi Muhammad SAW adalah?", a: "Muhammad bin Abdullah"},
+    {q: "Dimanakah Nabi Muhammad menerima wahyu pertama?", a: "Gua Hira"},
+    {q: "Kitab yang diturunkan kepada Nabi Isa AS adalah?", a: "Injil"},
+    {q: "Berapa jumlah Asmaul Husna?", a: "99"},
+    {q: "Nama ayah Nabi Ibrahim adalah?", a: "Azar"}
+  ]
+};
+
+/* ====== State ====== */
+let questions = [];
+let idx = 0;
+let score = 0;
+let playerName = '';
+let supported = false;
+
+/* ====== Elements ====== */
+const startBtn = document.getElementById('startBtn');
+const levelSelect = document.getElementById('level');
+const playerNameInput = document.getElementById('playerName');
+const questionEl = document.getElementById('question');
+const answerRow = document.getElementById('answerRow');
+const answerInput = document.getElementById('answer');
+const submitBtn = document.getElementById('submitBtn');
+const resultEl = document.getElementById('result');
+const scoreView = document.getElementById('scoreView');
+const scorebar = document.getElementById('scorebar');
+const progressText = document.getElementById('progressText');
+const confetti = document.getElementById('confetti');
+const card = document.getElementById('card');
+
+const bgMusic = document.getElementById('bgMusic');
+const sndCorrect = document.getElementById('sndCorrect');
+const sndWrong = document.getElementById('sndWrong');
+
+const payBtn = document.getElementById('payBtn');
+const payModal = document.getElementById('payModal');
+const closePay = document.getElementById('closePay');
+const paidBtn = document.getElementById('paidBtn');
+const gumroadLink = document.getElementById('gumroadLink');
+const eWallet = document.getElementById('eWallet');
+
+/* ----- placeholder: edit these to your real links/numbers ----- */
+gumroadLink.href = "FB"; // ganti dengan link produk Gumroad / Payhip dll
+eWallet.textContent = "0855-4526-0449"; // ganti nomor pembayaranmu
+
+/* ============================
+   Utility: Levenshtein similarity
+   ============================ */
+function similarity(a,b){
+  a = a || ''; b = b || '';
+  a = a.toLowerCase(); b = b.toLowerCase();
+  const al = a.length, bl = b.length;
+  if(al===0 && bl===0) return 1;
+  if(al===0 || bl===0) return 0;
+  const m = Array.from({length:bl+1}, (_,i)=> Array(al+1).fill(0));
+  for(let i=0;i<=bl;i++) m[i][0]=i;
+  for(let j=0;j<=al;j++) m[0][j]=j;
+  for(let i=1;i<=bl;i++){
+    for(let j=1;j<=al;j++){
+      const cost = b.charAt(i-1) === a.charAt(j-1) ? 0 : 1;
+      m[i][j] = Math.min(
+        m[i-1][j]+1,
+        m[i][j-1]+1,
+        m[i-1][j-1]+cost
+      );
+    }
+  }
+  const dist = m[bl][al];
+  const maxLen = Math.max(al,bl);
+  return 1 - dist/maxLen;
+}
+
+/* ============================
+   Start game
+   ============================ */
+startBtn.addEventListener('click', ()=>{
+  const lvl = levelSelect.value;
+  questions = shuffleArray([...data[lvl]]); // shuffle per sesi
+  idx = 0; score = 0;
+  playerName = playerNameInput.value.trim();
+  answerRow.style.display = 'flex';
+  scorebar.style.display = 'flex';
+  updateScore();
+  showQuestion();
+  // play music (some browsers require user gesture - start button counts)
+  try{ bgMusic.volume = 0.38; bgMusic.play().catch(()=>{}); }catch(e){}
+});
+
+/* submit flow */
+submitBtn.addEventListener('click', checkAnswer);
+answerInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') checkAnswer(); });
+
+function showQuestion(){
+  if(idx >= questions.length){
+    endGame(); return;
+  }
+  questionEl.textContent = `❓ ${questions[idx].q}`;
+  answerInput.value = '';
+  answerInput.focus();
+  progressText.textContent = `Soal ${idx+1} dari ${questions.length}`;
+  resultEl.textContent = '';
+}
+
+/* check answer with tolerance */
+function checkAnswer(){
+  const user = answerInput.value.trim();
+  const correct = (questions[idx].a || '').toString().trim();
+  const sim = similarity(user, correct);
+  // threshold can be tuned; 0.72 cukup longgar untuk perbedaan 1-2 huruf
+  const threshold = 0.72;
+  if(sim >= threshold){
+    // benar
+    handleCorrect();
+  } else {
+    handleWrong(correct);
+  }
+  idx++;
+  setTimeout(()=>{ showQuestion(); }, 1000);
+}
+
+function handleCorrect(){
+  score += 10;
+  updateScore();
+  resultEl.textContent = '✅ Benar! MasyaAllah!';
+  resultEl.style.color = 'var(--success)';
+  applyAnimation('flash-success');
+  playSound(sndCorrect);
+  fireConfetti();
+}
+
+function handleWrong(correct){
+  resultEl.innerHTML = `❌ Salah! Jawaban benar: <b>${correct}</b>`;
+  resultEl.style.color = 'var(--danger)';
+  applyAnimation('flash-wrong');
+  playSound(sndWrong);
+}
+
+/* helper */
+function updateScore(){
+  scoreView.textContent = score;
+}
+function applyAnimation(cls){
+  card.classList.remove('flash-success','flash-wrong');
+  // force reflow then add
+  void card.offsetWidth;
+  card.classList.add(cls);
+  setTimeout(()=>{ card.classList.remove(cls); }, 900);
+}
+function playSound(el){
+  try{ el.currentTime = 0; el.volume = 0.9; el.play().catch(()=>{}); }catch(e){}
+}
+
+/* shuffle */
+function shuffleArray(a){
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+/* confetti (simple circles) */
+function fireConfetti(){
+  // small confetti burst
+  for(let i=0;i<12;i++){
+    const s = document.createElement('span');
+    s.style.left = (40 + Math.random()*60) + '%';
+    s.style.top = (10 + Math.random()*10) + '%';
+    s.style.width = (6 + Math.random()*10) + 'px';
+    s.style.height = s.style.width;
+    const colors = ['#ff8a65','#ffd54f','#81c784','#4fc3f7','#bb86fc'];
+    s.style.background = colors[Math.floor(Math.random()*colors.length)];
+    s.style.transform = `translateY(0) rotate(${Math.random()*360}deg)`;
+    s.style.animationDuration = (1 + Math.random()*0.8)+'s';
+    confetti.appendChild(s);
+    setTimeout(()=> s.remove(),1800);
+  }
+}
+
+/* end game */
+function endGame(){
+  questionEl.textContent = '🌟 Kuis Selesai 🌟';
+  answerRow.style.display = 'none';
+  resultEl.innerHTML = `Skor Akhir ${playerName?('• '+escapeHtml(playerName)+' • '):''}<b>${score}</b> dari ${questions.length*10}<br><br>` +
+    (score === questions.length*10 ? '🌈 Sempurna! Kamu luar biasa!' :
+     score >= (questions.length*10*0.6) ? '✨ Bagus! Tetap semangat belajar Islam!' :
+     '📖 Yuk lebih giat lagi mengenal Islam!');
+  bgMusic.pause(); bgMusic.currentTime = 0;
+  // offer to play again (show start controls)
+}
+
+/* escape html helper for name display */
+function escapeHtml(str){
+  return str.replace(/[&<>"'`=\/]/g, function(s){ return ({'&':'&amp;','<':'&lt;', '>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'})[s];});
+}
+
+/* Reset button */
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  idx=0; score=0; playerNameInput.value=''; levelSelect.value='medium';
+  answerRow.style.display='none'; scorebar.style.display='none';
+  questionEl.textContent = 'Klik "Mulai" untuk memulai kuis.';
+  resultEl.textContent = '';
+  updateScore();
+  bgMusic.pause(); bgMusic.currentTime = 0;
+});
+
+/* ============================
+   Payment modal handlers
+   ============================ */
+payBtn.addEventListener('click', ()=>{ payModal.classList.add('show'); payModal.setAttribute('aria-hidden','false'); });
+closePay.addEventListener('click', ()=>{ payModal.classList.remove('show'); payModal.setAttribute('aria-hidden','true'); });
+paidBtn.addEventListener('click', ()=>{
+  // tanda bahwa pengguna sudah bayar
+  supported = true;
+  payModal.classList.remove('show');
+  showToast('Terima kasih! Dukunganmu sangat berarti 🙏');
+});
+
+/* simple toast message */
+function showToast(msg){
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.position='fixed';
+  t.style.right='20px';
+  t.style.bottom='20px';
+  t.style.padding='10px 14px';
+  t.style.background='rgba(3,57,108,0.9)';
+  t.style.color='white';
+  t.style.borderRadius='8px';
+  t.style.zIndex=9999;
+  document.body.appendChild(t);
+  setTimeout(()=> t.style.opacity='0',1800);
+  setTimeout(()=> t.remove(),2400);
+}
+
+/* allow clicking outside modal to close */
+payModal.addEventListener('click', (e)=>{ if(e.target === payModal){ payModal.classList.remove('show'); } });
+
+/* optionally: save 'supported' state in localStorage so user remembers (non-sensitive) */
+if(localStorage.getItem('hamami_supported') === 'true'){ supported = true; }
+paidBtn.addEventListener('click', ()=>{ localStorage.setItem('hamami_supported','true'); });
+
+/* Prevent autoplay blockers: background music starts only after Start button (user gesture) */
+/* End of script */
+</script>
+</body>
+</html>
