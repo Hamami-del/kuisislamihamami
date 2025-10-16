@@ -8,9 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg1: #e6f3ff;   /* gradasi biru langit */
+    --bg1: #e6f3ff;
     --bg2: #dff2ff;
-    --primary: #1976d2; /* biru tajam */
+    --primary: #1976d2;
     --accent: #0288d1;
     --success: #2e7d32;
     --danger: #c62828;
@@ -28,7 +28,6 @@
     justify-content:center;
     padding:20px;
   }
-
   .app {
     width:95%;
     max-width:700px;
@@ -39,7 +38,6 @@
     position:relative;
     overflow:hidden;
   }
-
   header {
     display:flex;
     align-items:center;
@@ -61,7 +59,6 @@
   }
   h1{font-size:18px;margin:0;color:var(--primary)}
   p.lead{margin:0;font-size:13px;color:#1769aa8a}
-
   .meta {
     display:flex;
     gap:8px;
@@ -69,13 +66,11 @@
     align-items:center;
     justify-content:space-between;
   }
-
   .controls{
     display:flex;
     gap:8px;
     align-items:center;
   }
-
   select, input[type="text"]{
     padding:8px 10px;
     border-radius:10px;
@@ -101,7 +96,6 @@
     border:1px solid rgba(3,57,108,0.08);
     box-shadow:none;
   }
-
   .card {
     margin-top:16px;
     background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.85));
@@ -115,7 +109,6 @@
     justify-content:center;
     position:relative;
   }
-
   .question{
     font-size:18px;
     color:#044f9a;
@@ -123,7 +116,6 @@
     margin-bottom:12px;
     text-align:center;
   }
-
   .answerRow{
     display:flex;
     gap:8px;
@@ -131,21 +123,14 @@
     justify-content:center;
     width:100%;
   }
-
   .result {
     margin-top:12px;
     font-weight:700;
     min-height:26px;
     transition:all .25s ease;
   }
-
-  /* Animations untuk benar / salah */
-  .flash-success {
-    animation: flashSuccess .9s ease both;
-  }
-  .flash-wrong {
-    animation: flashWrong .9s ease both;
-  }
+  .flash-success { animation: flashSuccess .9s ease both; }
+  .flash-wrong { animation: flashWrong .9s ease both; }
   @keyframes flashSuccess {
     0%{ transform: translateY(0); box-shadow: none; }
     20%{ transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 40px rgba(46,125,50,0.08);}
@@ -158,17 +143,15 @@
     60%{ transform: rotate(-1deg) }
     100%{ transform: rotate(0deg) }
   }
-
   .scorebar{
     display:flex;
     gap:8px;
     align-items:center;
     justify-content:space-between;
     margin-top:14px;
+    width:100%;
   }
   .small{font-size:12px;color:#1769aa8a}
-
-  /* Modal simple for PAY */
   .modal {
     position:fixed;
     inset:0;
@@ -190,7 +173,6 @@
   .payOptions {display:flex;flex-direction:column;gap:8px;margin-top:8px}
   .payRow{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:8px;border-radius:8px;border:1px dashed rgba(3,57,108,0.06)}
   .note{font-size:13px;color:#1769aa}
-
   footer{
     margin-top:12px;
     display:flex;
@@ -198,14 +180,10 @@
     align-items:center;
   }
   .byline{font-size:12px;color:#1769aa8a}
-
-  /* responsive */
   @media (max-width:520px){
     .answerRow{flex-direction:column}
     select{width:100%}
   }
-
-  /* confetti circles (simple) */
   .confetti {
     position:absolute;
     pointer-events:none;
@@ -221,7 +199,6 @@
   @keyframes fall{
     to { transform: translateY(140px) rotate(200deg); opacity:0; }
   }
-
 </style>
 </head>
 <body>
@@ -278,17 +255,12 @@
     </footer>
   </div>
 
-  <!-- Modal Pembayaran -->
   <div class="modal" id="payModal" aria-hidden="true">
     <div class="modalCard">
       <h3>Bayar Seikhlasnya • Dukung karya Hamami</h3>
       <p class="note">Jika kamu suka game ini, boleh bayar seikhlasnya agar Hamami bisa terus membuat konten edukasi Islami.</p>
 
       <div class="payOptions">
-        <!-- ----- ATURAN PENJUALAN / LINK PEMBAYARAN -----
-             Ganti teks/link di bawah dengan cara pembayaran milikmu,
-             contoh: link Gumroad, link Dana/OVO/GoPay, PayPal, dsb.
-        -->
         <div class="payRow">
           <div>Via Dana/OVO/GoPay</div>
           <div><span id="eWallet">0855-4526-0449</span></div>
@@ -308,7 +280,7 @@
 
   <!-- Background music & effects -->
   <audio id="bgMusic" loop preload="auto">
-    <source src="https://cdn.pixabay.com/download/audio/2024/07/09/audio_ed9df3f032.mp3?filename=islamic-music-no-copyright-copyright-free-islamic-background-music-223062.mp3&g-recaptcha-response=0cAFcWeA4LNY45dB0Gy7kKyNmu4Ka-y_LdUazgkMiACNeKqt5wqPkYe0OeDDwGFoKr8VB5203nTGQtEexTQHXgN_cs7c8YzjjkhrdKMD2CvrV4B44Z3k55eMwnuUfTmogSw6TMVnz6XFj_AglXiOpr_R3UhwBW0xyLgA3oMg6HV6JhE-Zn4AmP9q2i1bN8N7bGDaM2GSvEMNJHIzoMtqT4l_iYZ3vdeBKoZEUnpHuns1Oxtzvc6kJ5fpB6stWfExWwT8uhpYXmWpnxQMrd7dZqfkSe6Qa38RSyDk3GtUCyyB4P7GtKxY272ai50SF524nV99OU3krdT1pjHU5BHQkjs-gUzyGp1C5321hDsOgNYlfGVcwOC5rMXTJSZJL4CyDERhk4wMC7_mdXVvmctVgpNLFxnLQ3p0lWxFYxN-qJ2eNT8zrnvkVOimGeBMnqFPkHWDhEzKplluo84OVdkR1LJCcCSql_tHsAxfGFFOQ_McZOSms4cuOlYKKoYlH10EwRGneeMq9yhxldymTXz1CMOFDF4LsSTWeGveQA06klM8LGcuGEgpCY_kLmU5fngoy-l3KQVY7MwDOHfsfYh7e1UuxzrxCM9JNcMtgvA_CNKlYtcRY13a8LtwcWVscIEKv_h8RYObvv2mV840qZKmg7eC7iiP_cc2hZgANDQd1URRnVIBL7s7UOSNp26YGz9TvfjrA3PcKO75dko1NeEJxWaZnbKL-J_WDy88NSKLStoyJxP86CtUrmekzY8ce40OE1LcDlyEK_1NYBzLW59ePoTk16zn67ZKGm5g&remote_template=1" type="audio/mp3">
+    <source src="https://cdn.pixabay.com/download/audio/2024/07/09/audio_ed9df3f032.mp3?filename=islamic-music-no-copyright-copyright-free-islamic-background-music-223062.mp3" type="audio/mp3">
   </audio>
   <audio id="sndCorrect" preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2024/02/26/audio_cfc55c2a33.mp3?filename=shine-193240.mp3" type="audio/mp3">
@@ -319,7 +291,7 @@
 
 <script>
 /* =========================
-   Data soal per tingkat
+   Data soal per tingkat (50 per level sesuai permintaan)
    ========================= */
 const data = {
   easy: [
@@ -492,6 +464,7 @@ let idx = 0;
 let score = 0;
 let playerName = '';
 let supported = false;
+let acceptingAnswer = true; // prevent double submits
 
 /* ====== Elements ====== */
 const startBtn = document.getElementById('startBtn');
@@ -516,11 +489,9 @@ const payBtn = document.getElementById('payBtn');
 const payModal = document.getElementById('payModal');
 const closePay = document.getElementById('closePay');
 const paidBtn = document.getElementById('paidBtn');
-const gumroadLink = document.getElementById('gumroadLink');
 const eWallet = document.getElementById('eWallet');
 
-/* ----- placeholder: edit these to your real links/numbers ----- */
-eWallet.textContent = "0855-4526-0449"; // ganti nomor pembayaranmu
+eWallet.textContent = "0855-4526-0449";
 
 /* ============================
    Utility: Levenshtein similarity
@@ -545,56 +516,67 @@ function similarity(a,b){
     }
   }
   const dist = m[bl][al];
-  const maxLen = Math.max(al,bl);
+  const maxLen = Math.max(al,bl) || 1;
   return 1 - dist/maxLen;
 }
 
 /* ============================
    Start game
    ============================ */
-startBtn.addEventListener('click', ()=>{
+startBtn.addEventListener('click', startGame);
+
+function startGame(){
   const lvl = levelSelect.value;
-  questions = shuffleArray([...data[lvl]]); // shuffle per sesi
+  // copy and shuffle the chosen level questions
+  questions = shuffleArray([...data[lvl]]);
   idx = 0; score = 0;
   playerName = playerNameInput.value.trim();
+  acceptingAnswer = true;
+
+  // show UI
   answerRow.style.display = 'flex';
   scorebar.style.display = 'flex';
   updateScore();
   showQuestion();
-  // play music (some browsers require user gesture - start button counts)
+
+  // ensure music plays on user gesture
   try{ bgMusic.volume = 0.38; bgMusic.play().catch(()=>{}); }catch(e){}
-});
+}
 
 /* submit flow */
-submitBtn.addEventListener('click', checkAnswer);
-answerInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') checkAnswer(); });
+submitBtn.addEventListener('click', ()=>{ if(acceptingAnswer) checkAnswer(); });
+answerInput.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' && acceptingAnswer) checkAnswer(); });
 
 function showQuestion(){
   if(idx >= questions.length){
-    endGame(); return;
+    endGame();
+    return;
   }
-  questionEl.textContent = `❓ ${questions[idx].q}`;
+  const q = questions[idx];
+  questionEl.textContent = `❓ ${q.q}`;
   answerInput.value = '';
   answerInput.focus();
   progressText.textContent = `Soal ${idx+1} dari ${questions.length}`;
   resultEl.textContent = '';
+  acceptingAnswer = true;
 }
 
 /* check answer with tolerance */
 function checkAnswer(){
+  if(!acceptingAnswer) return;
+  acceptingAnswer = false;
   const user = answerInput.value.trim();
   const correct = (questions[idx].a || '').toString().trim();
   const sim = similarity(user, correct);
-  // threshold can be tuned; 0.72 cukup longgar untuk perbedaan 1-2 huruf
-  const threshold = 0.72;
+  const threshold = 0.72; // tolerance
   if(sim >= threshold){
-    // benar
     handleCorrect();
   } else {
     handleWrong(correct);
   }
   idx++;
-  setTimeout(()=>{ showQuestion(); }, 1000);
+  // short delay before next question to show feedback
+  setTimeout(()=>{ showQuestion(); }, 900);
 }
 
 function handleCorrect(){
@@ -608,7 +590,7 @@ function handleCorrect(){
 }
 
 function handleWrong(correct){
-  resultEl.innerHTML = `❌ Salah! Jawaban benar: <b>${correct}</b>`;
+  resultEl.innerHTML = `❌ Salah! Jawaban benar: <b>${escapeHtml(correct)}</b>`;
   resultEl.style.color = 'var(--danger)';
   applyAnimation('flash-wrong');
   playSound(sndWrong);
@@ -620,7 +602,6 @@ function updateScore(){
 }
 function applyAnimation(cls){
   card.classList.remove('flash-success','flash-wrong');
-  // force reflow then add
   void card.offsetWidth;
   card.classList.add(cls);
   setTimeout(()=>{ card.classList.remove(cls); }, 900);
@@ -640,13 +621,13 @@ function shuffleArray(a){
 
 /* confetti (simple circles) */
 function fireConfetti(){
-  // small confetti burst
   for(let i=0;i<12;i++){
     const s = document.createElement('span');
     s.style.left = (40 + Math.random()*60) + '%';
     s.style.top = (10 + Math.random()*10) + '%';
-    s.style.width = (6 + Math.random()*10) + 'px';
-    s.style.height = s.style.width;
+    const size = (6 + Math.random()*10);
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
     const colors = ['#ff8a65','#ffd54f','#81c784','#4fc3f7','#bb86fc'];
     s.style.background = colors[Math.floor(Math.random()*colors.length)];
     s.style.transform = `translateY(0) rotate(${Math.random()*360}deg)`;
@@ -660,17 +641,22 @@ function fireConfetti(){
 function endGame(){
   questionEl.textContent = '🌟 Kuis Selesai 🌟';
   answerRow.style.display = 'none';
-  resultEl.innerHTML = `Skor Akhir ${playerName?('• '+escapeHtml(playerName)+' • '):''}<b>${score}</b> dari ${questions.length*10}<br><br>` +
-    (score === questions.length*10 ? '🌈 Sempurna! Kamu luar biasa!' :
-     score >= (questions.length*10*0.6) ? '✨ Bagus! Tetap semangat belajar Islam!' :
-     '📖 Yuk lebih giat lagi mengenal Islam!');
+  const total = questions.length * 10;
+  const playerPart = playerName ? ('• ' + escapeHtml(playerName) + ' • ') : '';
+  const message = score === total ? '🌈 Sempurna! Kamu luar biasa!' :
+    score >= (total * 0.6) ? '✨ Bagus! Tetap semangat belajar Islam!' :
+    '📖 Yuk lebih giat lagi mengenal Islam!';
+  resultEl.innerHTML = `Skor Akhir ${playerPart}<b>${score}</b> dari ${total}<br><br>${message}`;
+  progressText.textContent = `Selesai • ${questions.length} soal`;
   bgMusic.pause(); bgMusic.currentTime = 0;
-  // offer to play again (show start controls)
+
+  // allow starting again by changing Start button text (optional UX)
+  startBtn.textContent = 'Mulai Lagi';
 }
 
 /* escape html helper for name display */
 function escapeHtml(str){
-  return str.replace(/[&<>"'`=\/]/g, function(s){ return ({'&':'&amp;','<':'&lt;', '>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'})[s];});
+  return String(str).replace(/[&<>"'`=\/]/g, function(s){ return ({'&':'&amp;','<':'&lt;', '>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#x3D;'})[s];});
 }
 
 /* Reset button */
@@ -679,8 +665,11 @@ document.getElementById('resetBtn').addEventListener('click', ()=>{
   answerRow.style.display='none'; scorebar.style.display='none';
   questionEl.textContent = 'Klik "Mulai" untuk memulai kuis.';
   resultEl.textContent = '';
+  progressText.textContent = '';
   updateScore();
   bgMusic.pause(); bgMusic.currentTime = 0;
+  startBtn.textContent = 'Mulai';
+  acceptingAnswer = true;
 });
 
 /* ============================
@@ -689,10 +678,10 @@ document.getElementById('resetBtn').addEventListener('click', ()=>{
 payBtn.addEventListener('click', ()=>{ payModal.classList.add('show'); payModal.setAttribute('aria-hidden','false'); });
 closePay.addEventListener('click', ()=>{ payModal.classList.remove('show'); payModal.setAttribute('aria-hidden','true'); });
 paidBtn.addEventListener('click', ()=>{
-  // tanda bahwa pengguna sudah bayar
   supported = true;
   payModal.classList.remove('show');
   showToast('Terima kasih! Dukunganmu sangat berarti 🙏');
+  localStorage.setItem('hamami_supported','true');
 });
 
 /* simple toast message */
@@ -715,15 +704,11 @@ function showToast(msg){
 /* allow clicking outside modal to close */
 payModal.addEventListener('click', (e)=>{ if(e.target === payModal){ payModal.classList.remove('show'); } });
 
-/* optionally: save 'supported' state in localStorage so user remembers (non-sensitive) */
+/* optionally: restore 'supported' state */
 if(localStorage.getItem('hamami_supported') === 'true'){ supported = true; }
-paidBtn.addEventListener('click', ()=>{ localStorage.setItem('hamami_supported','true'); });
 
 /* Prevent autoplay blockers: background music starts only after Start button (user gesture) */
 /* End of script */
 </script>
 </body>
 </html>
-
-
-
